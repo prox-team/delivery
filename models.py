@@ -1,51 +1,62 @@
-from flask_sqlalchemy import SQLAlchemy, event
-from sqlalchemy import event
 from werkzeug.security import generate_password_hash, check_password_hash
-
-db = SQLAlchemy()
-
-
-class Association(db.Model):
-    __tablename__ = 'orders_meals_association'
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), primary_key=True)
-    meal_id = db.Column(db.Integer, db.ForeignKey('meals.id'), primary_key=True)
-    counter = db.Column(db.Integer, default=0)
-    order = db.relationship("Order", backref="order_associations")
-    meal = db.relationship("Meal", backref="meal_associations")
+from flask_mongoengine import MongoEngine
+from app import app
+db = MongoEngine(app)
 
 
-class Order(db.Model):
-    __tablename__ = 'orders'
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, nullable=False)
-    sum = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.String(30), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    mail = db.Column(db.String(30), nullable=False)
-    phone = db.Column(db.String(30), nullable=False)
-    address = db.Column(db.String(30), nullable=False)
-    meals = db.relationship("Meal", secondary="orders_meals_association")
+class Category(db.Document):
+    meta = {'collection': 'categories'}
+    category_id = db.IntField(required=True)
+    title = db.StringField(required=True)
+
+    def __unicode__(self):
+        return self.title
 
 
-class Meal(db.Model):
-    __tablename__ = 'meals'
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(500), nullable=False)
-    picture = db.Column(db.String(15), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    category = db.relationship('Category')
+class Meal(db.Document):
+    meta = {'collection': 'meals'}
+    meal_id = db.IntField(required=True)
+    title = db.StringField(required=True)
+    price = db.IntField(required=True)
+    description = db.StringField(required=True)
+    picture = db.StringField(required=True)
+    category_id = db.IntField(required=True)
+    category = db.LazyReferenceField(Category)
+
+    def __unicode__(self):
+        return self.title
 
 
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
-    mail = db.Column(db.String(30), nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
-    role = db.Column(db.String(32), nullable=False)
-    orders = db.relationship('Order')
+class MealWithCount(db.Document):
+    meta = {'collection': 'meals_with_count'}
+    meal = db.LazyReferenceField(Meal)
+    count = db.IntField(required=True)
+
+
+class Order(db.Document):
+    meta = {'collection': 'orders'}
+    date = db.DateTimeField(required=True)
+    sum = db.IntField(required=True)
+    status = db.StringField(required=True)
+    user = db.LazyReferenceField('User')
+    phone = db.StringField(required=True)
+    address = db.StringField(required=True)
+    meals = db.ListField(db.LazyReferenceField(MealWithCount))
+
+    def __unicode__(self):
+        return self.date
+
+
+class User(db.Document):
+    meta = {'collection': 'users'}
+    name = db.StringField(required=True)
+    mail = db.EmailField()
+    password_hash = db.StringField()
+    role = db.StringField()
+    orders = db.ListField(db.LazyReferenceField(Order))
+
+    def __unicode__(self):
+        return self.mail
 
     @property
     def password(self):
@@ -57,11 +68,3 @@ class User(db.Model):
 
     def password_valid(self, password):
         return check_password_hash(self.password_hash, password)
-
-
-class Category(db.Model):
-    __tablename__ = 'categories'
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(30), nullable=False)
-
-
