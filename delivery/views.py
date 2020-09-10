@@ -1,6 +1,7 @@
 import json
 from flask import render_template, session, redirect, request, jsonify
 from delivery.config import Config
+from delivery.init_db import create_base
 from delivery.forms import RegistrationForm, LoginForm, OrderForm
 from delivery.models import Category, Meal, User, Order, MealWithCount
 from delivery import app
@@ -14,6 +15,12 @@ def auth(user=None):
     else:
         for key in session.keys():
             session.pop(key)
+
+
+@app.before_first_request
+def init_base():
+    if User.objects.count() < 2:
+        create_base()
 
 
 @app.route('/')

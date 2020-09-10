@@ -3,7 +3,7 @@ import pkg_resources
 
 
 def get_requires():
-    path = 'delivery/requirements.txt'  # always use slash
+    path = 'delivery/requirements.txt'
     filepath = pkg_resources.resource_filename(__name__, path)
     with open(filepath) as file:
         packages = [name.rstrip() for name in file.readlines()]
