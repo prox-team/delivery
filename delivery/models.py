@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mongoengine import MongoEngine
-from app import app
+from delivery import app
 db = MongoEngine(app)
 
 

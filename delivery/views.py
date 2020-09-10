@@ -1,10 +1,9 @@
 import json
-import time
 from flask import render_template, session, redirect, request, jsonify
-from config import Config
-from forms import RegistrationForm, LoginForm, OrderForm
-from models import Category, Meal, User, Order, MealWithCount
-from app import app
+from delivery.config import Config
+from delivery.forms import RegistrationForm, LoginForm, OrderForm
+from delivery.models import Category, Meal, User, Order, MealWithCount
+from delivery import app
 from datetime import datetime
 
 

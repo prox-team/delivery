@@ -1,8 +1,6 @@
-from models import User, Category, Meal
-from config import Config
+from delivery.models import User, Category, Meal
 
-
-with open("../untitled/data/delivery_categories.csv", "r") as file:
+with open("../../untitled/data/delivery_categories.csv", "r") as file:
     lines = file.readlines()
     for i in range(1, len(lines)):
         data = lines[i].split(",")
@@ -11,7 +9,7 @@ with open("../untitled/data/delivery_categories.csv", "r") as file:
         category.save()
 
 # id,title,price,description,picture,category_id
-with open("../untitled/data/meals.csv", "r") as file:
+with open("../../untitled/data/meals.csv", "r") as file:
     lines = file.readlines()
     for i in range(1, len(lines)):
         data = lines[i].split(";")

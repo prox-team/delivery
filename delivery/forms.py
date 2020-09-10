@@ -5,8 +5,8 @@ from wtforms.validators import InputRequired, Length, EqualTo, Regexp
 from flask_wtf.csrf import CSRFProtect
 import requests
 import json
-from app import app
-from config import Config
+from delivery import app
+from delivery.config import Config
 
 csrf = CSRFProtect(app)
 
