@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block container %}
+  <main class="container">
+    <h1 class="h3 my-4">Корзина</h1>
+
+    <div class="alert alert-warning" id="1" style="display: none" role="alert">Блюдо удалено из корзины</div>
+    <div class="alert alert-warning" style="{{ 'display: none;' if is_auth else '' }}" role="alert">Чтобы сохранить заказ – <a href="/login.html">войдите</a> или <a href="/register.html">зарегистрируйтесь</a></div>
+
+    <div class="row mt-5">
+
+
+        <div class="col-4">
+          <form action="/cart/" class="form-signin pt-5" name="cart" method="POST">
+          <h4 class="">Ваши данные</h4>
+              {% if form.errors %}
+                <ul class="errors">
+                    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                        {% for error in field_errors %}
+                            <li>{{ form[field_name].label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+          <div class=" md-4 order-md-1">
+            <div class="mt-3 mb-3" style="{{ 'display: none;' if is_auth else '' }}">
+              <label for="name">Ваше имя</label>
+                {{ form.name(class_="font-weight-bold form-control") }}
+            </div>
+          </div>
+          <div class=" md-4 order-md-1">
+            <div class="mt-3 mb-3">
+              <label for="name">Адрес</label>
+              {{ form.address(class_="font-weight-bold form-control") }}
+            </div>
+          </div>
+          <div class="md-4 form-label-group" style="{{ 'display: none;' if is_auth else '' }}">
+            <label for="name">Электропочта</label>
+            {{ form.email(class_="font-weight-bold form-control") }}
+          </div>
+          <div class=" md-4 order-md-1">
+            <div class="mt-3 mb-3">
+              <label for="name">Телефон</label>
+              {{ form.phone(class_="font-weight-bold form-control") }}
+            </div> {{ form.hidden_tag() }}
+            <button type="submit" class=" mt-3 mb-5 btn btn-danger" name="reset">Оформить заказ</button>
+          </form>
+        </div>
+
+
+
+
+
+        </div>
+
+
+
+      <div class="col-1"></div>
+      <div class="col-7">
+        <h4 class="mb-3 col-7 mb-5"><span id="qnt">0</span> блюд в корзине</h4>
+        <table class="table">
+          <tbody>
+            {% for meal in data %}<tr id="{{ meal.meal_id }}">
+              <th scope="row">{{ meal.title }}</th>
+              <td></td>
+              <td><input type="main" class="main" value="{{ meal.qnt }}" min="0" id="{{ meal.meal_id }}" price="{{ meal.price }}"/></td>
+              <td><span>{{ meal.price }}₽</span></td>
+              <td><span class="sum{{ meal.meal_id }}">∑{{ meal.qnt*meal.price }}₽</span></td>
+            </tr>{% endfor %}
+          </tbody>
+        </table>
+        <hr>
+        <p class="display-4 my-2 "><span id="sum">0</span> руб.</p>
+      </div>
+    </div>
+  </main>
+{% endblock %}
