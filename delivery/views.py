@@ -10,7 +10,7 @@ from datetime import datetime
 
 def auth(user=None):
     if user:
-        for k, v in {"name": user.name,  "username": user.mail, "role": user.role, "logged_in": True}.items():
+        for k, v in {"name": user.name, "username": user.mail, "role": user.role, "logged_in": True}.items():
             session[k] = v
     else:
         for key in session.keys():
@@ -44,7 +44,8 @@ def cart():
         data = []
         for meal in meals:
             sum += int(meal.price) * int(selected_meals[meal.meal_id])
-            data.append({'meal_id': meal.meal_id, 'title': meal.title, 'price': meal.price, 'qnt': selected_meals[meal.meal_id]})
+            data.append({'meal_id': meal.meal_id, 'title': meal.title,
+                         'price': meal.price, 'qnt': selected_meals[meal.meal_id]})
     if request.method == "POST":
         if 'logged_in' in session and session['logged_in']:
             form.name.data = session['name']
@@ -129,8 +130,8 @@ def account():
                 meals_list.append(
                     {'id': meal.meal_id, 'title': meal.title, 'qnt': item.count, 'price': meal.price,
                      'sum': item.count * meal.price})
-            data.append({'order_date': str(order.date.day)+' '+month_list[order.date.month]+' в '+order.date.strftime("%H:%M"),
-                         'order_sum': order.sum, 'meals': meals_list})
+            data.append({'order_sum': order.sum, 'meals': meals_list,
+                         'order_date': str(order.date.day) + ' ' + month_list[
+                             order.date.month] + ' в ' + order.date.strftime("%H:%M"), })
         return render_template("account.html", data=data[::-1])
     return redirect('/auth/')
-

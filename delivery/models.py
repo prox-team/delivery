@@ -1,11 +1,9 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_mongoengine import MongoEngine
-from delivery import app
-db = MongoEngine(app)
+from delivery import app, db
 
 
 class Category(db.Document):
-    meta = {'collection': 'categories'}
+    meta = {'collection': 'categories', 'allow_inheritance': True}
     category_id = db.IntField(required=True)
     title = db.StringField(required=True)
 
@@ -14,7 +12,7 @@ class Category(db.Document):
 
 
 class Meal(db.Document):
-    meta = {'collection': 'meals'}
+    meta = {'collection': 'meals', 'allow_inheritance': True}
     meal_id = db.IntField(required=True)
     title = db.StringField(required=True)
     price = db.IntField(required=True)
@@ -28,13 +26,13 @@ class Meal(db.Document):
 
 
 class MealWithCount(db.Document):
-    meta = {'collection': 'meals_with_count'}
+    meta = {'collection': 'meals_with_count', 'allow_inheritance': True}
     meal = db.LazyReferenceField(Meal)
     count = db.IntField(required=True)
 
 
 class Order(db.Document):
-    meta = {'collection': 'orders'}
+    meta = {'collection': 'orders', 'allow_inheritance': True}
     date = db.DateTimeField(required=True)
     sum = db.IntField(required=True)
     status = db.StringField(required=True)
@@ -48,7 +46,7 @@ class Order(db.Document):
 
 
 class User(db.Document):
-    meta = {'collection': 'users'}
+    meta = {'collection': 'users', 'allow_inheritance': True}
     name = db.StringField(required=True)
     mail = db.EmailField()
     password_hash = db.StringField()
