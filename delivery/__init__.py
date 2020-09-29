@@ -25,6 +25,7 @@ app.config.from_object(Config)
 db = MongoEngine(app)
 
 from delivery.views import *
+from delivery.admin import *
 
 if __name__ == '__main__':
     app.run()

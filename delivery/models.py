@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from delivery import app, db
+from delivery import db
 
 
 class Category(db.Document):
@@ -19,7 +19,7 @@ class Meal(db.Document):
     description = db.StringField(required=True)
     picture = db.StringField(required=True)
     category_id = db.IntField(required=True)
-    category = db.LazyReferenceField(Category)
+    category = db.ReferenceField(Category)
 
     def __unicode__(self):
         return self.title
@@ -27,7 +27,7 @@ class Meal(db.Document):
 
 class MealWithCount(db.Document):
     meta = {'collection': 'meals_with_count', 'allow_inheritance': True}
-    meal = db.LazyReferenceField(Meal)
+    meal = db.ReferenceField(Meal)
     count = db.IntField(required=True)
 
 
@@ -36,10 +36,10 @@ class Order(db.Document):
     date = db.DateTimeField(required=True)
     sum = db.IntField(required=True)
     status = db.StringField(required=True)
-    user = db.LazyReferenceField('User')
+    user = db.ReferenceField('User')
     phone = db.StringField(required=True)
     address = db.StringField(required=True)
-    meals = db.ListField(db.LazyReferenceField(MealWithCount))
+    meals = db.ListField(db.ReferenceField(MealWithCount))
 
     def __unicode__(self):
         return self.date

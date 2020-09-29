@@ -4,3 +4,4 @@ wtforms~=2.3.1
 mongoengine~=0.20.0
 werkzeug~=1.0.1
 gunicorn~=20.0.4
+email-validator~=1.1.1
