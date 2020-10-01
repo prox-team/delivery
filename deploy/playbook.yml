@@ -1,0 +1,30 @@
+---
+- name: Deployer of project
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Install dependences
+      apt:
+        update_cache: yes
+        pkg:
+          - docker.io
+          - docker-compose
+          - git
+
+    - name: Install virtualenv via pip
+      pip:
+        name: virtualenv
+        executable: pip3
+
+    - name: Clone project
+      git:
+        repo: 'https://github.com/ponomarevkonst/delivery'
+        dest: /home/main/nalog_scrapper
+        clone: yes
+        update: yes
+
+
+    - name: Run docker-compose #@TODO make it detached somehow
+      command:
+        cmd:  docker-compose -f delivery/docker-compose.yml up
