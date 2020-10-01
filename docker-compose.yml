@@ -14,7 +14,6 @@ services:
       - 27017:27017
 
   delivery-app:
-      build: .
+      build: delivery
       ports:
         - "5000:5000"
-
