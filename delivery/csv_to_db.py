@@ -1,4 +1,4 @@
-from delivery.models import User, Category, Meal
+from models import User, Category, Meal
 
 with open("../../untitled/data/delivery_categories.csv", "r") as file:
     lines = file.readlines()

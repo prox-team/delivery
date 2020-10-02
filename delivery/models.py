@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from delivery import db
+from app import db
 
 
 class Category(db.Document):

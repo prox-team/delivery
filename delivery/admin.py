@@ -1,7 +1,7 @@
 from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.mongoengine import ModelView
-from delivery import app, redirect, session
-from delivery.models import User, Category, Order, Meal
+from app import app, redirect, session
+from models import User, Category, Order, Meal
 
 
 class MyAdminIndexView(AdminIndexView):

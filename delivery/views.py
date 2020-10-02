@@ -1,10 +1,10 @@
 import json
 from flask import render_template, session, redirect, request, jsonify
-from delivery.config import Config
-from delivery.init_db import create_base
-from delivery.forms import RegistrationForm, LoginForm, OrderForm
-from delivery.models import Category, Meal, User, Order, MealWithCount
-from delivery import app
+from config import Config
+from init_db import create_base
+from forms import RegistrationForm, LoginForm, OrderForm
+from models import Category, Meal, User, Order, MealWithCount
+from app import app
 from datetime import datetime
 
 

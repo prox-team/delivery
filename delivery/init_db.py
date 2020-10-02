@@ -1,5 +1,5 @@
-from delivery import Config
-from delivery.models import User, Category, Meal
+from config import Config
+from models import User, Category, Meal
 
 def create_base():
     path = __file__[:-10] + 'data/'
