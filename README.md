@@ -23,7 +23,7 @@ Delivery is very easy to install and deploy using docker-compose.
 $ docker-compose up
 ```
 
-### Deployment
+### Deploy
 Another easy way to deploy is ansible playbook.
 ```sh
 $ ansible-playbook deployment/playbook.yml
