@@ -4,7 +4,7 @@ Delivery is flask based web application for online food ordering.
 [![](https://i.ibb.co/1fxGdfh/Screenshot-2020-10-02-at-03-50-58.png)](https://i.ibb.co/nsSMnsZ/Screenshot-2020-10-02-at-03-50-58.png)[![](https://i.ibb.co/XC3YWKq/Screenshot-2020-10-01-at-19-46-05.png)](https://i.ibb.co/G5tHd8q/Screenshot-2020-10-01-at-19-46-05.png)
 
 ## Tech
-Delivery :
+Delivery uses this to work properly::
 
 * Flask - backend
 * Mongoengine - Mongodb ODM 
