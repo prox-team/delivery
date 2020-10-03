@@ -5,3 +5,4 @@ flask-mongoengine~=0.9.5
 werkzeug~=1.0.1
 gunicorn~=20.0.4
 email-validator~=1.1.1
+requests~=2.23.0
