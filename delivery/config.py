@@ -6,7 +6,7 @@ class Config:
     MONGODB_DB = 'delivery'
     FLASK_DEBUG = False
     FIRST_RUN = False
-    CAPTCHA_SERVER_KEY = '6LctT7wZAAAAABHdfuFF2PMUljFyZfC3Ai6_FKND'
-    CAPTCHA_CLIENT_KEY = '6LctT7wZAAAAAEuScMNpqsw9zXnNUMLvY_lq9_Xr'
+    CAPTCHA_SERVER_KEY = os.environ['CAPTCHA_SERVER_KEY'] # google recaptcha
+    CAPTCHA_CLIENT_KEY = os.environ['CAPTCHA_CLIENT_KEY'] # google recaptcha
     PASSWORD = 'superVeryLongAdminPassword'
 
