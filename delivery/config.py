@@ -3,7 +3,10 @@ import os
 
 class Config:
     SECRET_KEY = secrets.token_urlsafe(32)
-    MONGODB_DB = 'delivery'
+    MONGODB_HOST = 'mongodb'
+    MONGODB_DB = 'delivery-base'
+    MONGODB_USERNAME = 'delivery-user'
+    MONGODB_PASSWORD = 'delivery-password'
     FLASK_DEBUG = False
     FIRST_RUN = False
     CAPTCHA_SERVER_KEY = os.environ['CAPTCHA_SERVER_KEY'] # google recaptcha
