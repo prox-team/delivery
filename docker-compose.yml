@@ -6,14 +6,24 @@ services:
     container_name: mongodb
     environment:
       - MONGO_INITDB_DATABASE=delivery
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root-password
-    volumes:
-      - ./deploy/init_mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
-    ports:
-      - 27017:27017
+    expose:
+      - 27017
 
-  delivery-app:
+  delivery:
     build: delivery
+    expose:
+      - 5000
+    volumes:
+      - delivery_static:/delivery/static
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - delivery_static:/delivery/static
     ports:
-      - 5000:5000
+      - 1337:80
+    depends_on:
+      - delivery
+
+volumes:
+  delivery_static:
