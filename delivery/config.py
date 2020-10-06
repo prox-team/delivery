@@ -8,5 +8,5 @@ class Config:
     FIRST_RUN = False
     CAPTCHA_SERVER_KEY = os.environ['CAPTCHA_SERVER_KEY'] # google recaptcha
     CAPTCHA_CLIENT_KEY = os.environ['CAPTCHA_CLIENT_KEY'] # google recaptcha
-    PASSWORD = 'superVeryLongAdminPassword'
+    PASSWORD = os.environ['PASSWORD']
 
